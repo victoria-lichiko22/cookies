@@ -30,7 +30,7 @@ function getRandomID() {
 
 const randomCookie = computed(()=> cookieList.value[getRandomID()])
 
-const tg = ref(window.Telegram?.WebApp);
+const tg = window.Telegram?.WebApp;
 </script>
 
 <template>
