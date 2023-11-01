@@ -43,7 +43,7 @@ function toggleText() {
   <div>
     <div v-if="!showText" class="flex flex-wrap justify-content-center">
       <img v-for="n in 9" alt="Vue logo" class="logo"
-           src="../assets/cookie.PNG" width="100" height="100"
+           src="../assets/cookie.png" width="100" height="100"
            @click="toggleText()"
       />
     </div>
