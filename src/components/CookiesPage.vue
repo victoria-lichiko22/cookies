@@ -34,11 +34,11 @@ const tg = window.Telegram?.WebApp;
 </script>
 
 <template>
-  <div class="flex flex-column">
-    <div class="text-lg font-semibold">
+  <div class="flex flex-column background">
+    <div class="text-lg font-semibold mytext">
       {{ randomCookie.name }}
     </div>
-    <div>
+    <div class="mytext">
       {{ randomCookie.description }}
     </div>
     {{ tg }}
@@ -46,5 +46,11 @@ const tg = window.Telegram?.WebApp;
 </template>
 
 <style scoped>
+.background {
+  background-color: var(--tg-theme-bg-color);
+}
 
+.mytext {
+  color: var(--tg-theme-text-color);
+}
 </style>
