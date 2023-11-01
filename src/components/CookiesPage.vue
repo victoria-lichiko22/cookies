@@ -31,18 +31,33 @@ function getRandomID() {
 const randomCookie = computed(()=> cookieList.value[getRandomID()])
 
 const tg = window.Telegram?.WebApp;
+
+const showText = ref(false);
+
+function toggleText() {
+  showText.value =!showText.value;
+}
 </script>
 
 <template>
-  <div class="flex flex-column background">
-    <div class="text-lg font-semibold mytext">
-      {{ randomCookie.name }}
+  <div>
+    <div v-if="!showText" class="flex flex-wrap justify-content-center">
+      <img v-for="n in 9" alt="Vue logo" class="logo"
+           src="../assets/cookie.PNG" width="100" height="100"
+           @click="toggleText()"
+      />
     </div>
-    <div class="mytext">
-      {{ randomCookie.description }}
+    <div v-if="showText" class="flex flex-column background">
+      <div class="text-lg font-semibold mytext">
+        {{ randomCookie.name }}
+      </div>
+      <div class="mytext">
+        {{ randomCookie.description }}
+      </div>
+      {{ tg }}
     </div>
-    {{ tg }}
   </div>
+
 </template>
 
 <style scoped>
