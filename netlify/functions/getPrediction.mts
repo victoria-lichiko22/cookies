@@ -22,12 +22,9 @@ export default async (req: Request, context: Context) => {
         const collection = database.collection(process.env.MONGODB_COLLECTION);
         const results = await collection.aggregate([{ $sample: { size: 1 } }]).toArray();
         await logUserRequest(user)
-        return {
-            statusCode: 200,
-            body: JSON.stringify(results),
-        }
+        return new Response(JSON.stringify(results))
     } catch (error) {
-        return { statusCode: 500, body: error.toString() }
+        return new Response(error.toString(), { status: 500 })
     }
 }
 
