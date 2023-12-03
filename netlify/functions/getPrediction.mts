@@ -15,7 +15,7 @@ export default async (req: Request, context: Context) => {
         if (count > 0) {
             return { statusCode: 403, body: "Приходи завтра" }
         }
-
+        console.log("get data")
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_COLLECTION);
         const results = await collection.aggregate([{ $sample: { size: 1 } }]).toArray();
@@ -48,6 +48,7 @@ const logUserRequest = async (user: string) => {
 
 async function getRecordCountForUsername(username: string) {
     try {
+        console.log('getRecordCountForUsername', username);
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_USERLOG_COLLECTION);
         const currentDate = new Date();
