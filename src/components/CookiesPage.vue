@@ -8,7 +8,7 @@ interface CookiePrediction {
 }
 
 const randomCookie = ref<CookiePrediction | undefined>(undefined);
-const ok = ref<boolean>(true);
+const ok = ref<boolean>(false);
 const loaded = ref<boolean>(false);
 const tg = window.Telegram?.WebApp;
 async function getPredictionAPI()  {
@@ -44,8 +44,8 @@ function toggleText() {
 
 onMounted(async ()=> {
   const count = await getTodayPredictionAPI();
-  if (count > 0) {
-    ok.value = false
+  if (count == 0) {
+    ok.value = true;
   }
   loaded.value = true;
 })
