@@ -6,17 +6,8 @@ export default async (req: Request, context: Context) => {
     const mongoClient = new MongoClient(process.env.MONGODB_URI);
     const clientPromise = mongoClient.connect();
     try {
-
         const queryParams = new URLSearchParams(req.url.split('?')[1]);
         const user = queryParams.get("user")
-        console.log("request from:", user)
-        const count = await getRecordCountForUsername(user)
-        console.log("record count:", count)
-        if (count > 0) {
-            console.log("return forbidden")
-            return new Response("forbidden", { status: 403 })
-        }
-        console.log("get data")
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_COLLECTION);
         const results = await collection.aggregate([{ $sample: { size: 1 } }]).toArray();
@@ -47,38 +38,5 @@ const logUserRequest = async (user: string) => {
         console.log('logUserRequest error: ' + error.toString());
     } finally {
         await mongoClient.close()
-    }
-}
-
-async function getRecordCountForUsername(username: string) {
-    const mongoClient = new MongoClient(process.env.MONGODB_URI);
-    const clientPromise = mongoClient.connect();
-    try {
-        console.log('getRecordCountForUsername', username);
-        const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
-        const collection = database.collection(process.env.MONGODB_USERLOG_COLLECTION);
-        const currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0);
-        const result = await collection.aggregate([
-            {
-                $match: {
-                    user: username,
-                    timestamp: { $gte: currentDate },
-                },
-            },
-            {
-                $group: {
-                    _id: null,
-                    count: { $sum: 1 },
-                },
-            },
-        ]).toArray();
-        const r = result.length > 0 ? result[0].count : 0
-        console.log(`getRecordCountForUsername result: ${r}`)
-        return r
-    } catch (error) {
-        console.log('getRecordCountForUsername error: ' + error.toString());
-    } finally {
-        await mongoClient.close();
     }
 }

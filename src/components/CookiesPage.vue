@@ -9,6 +9,7 @@ interface CookiePrediction {
 
 const randomCookie = ref<CookiePrediction | undefined>(undefined);
 const ok = ref<boolean>(true);
+const loaded = ref<boolean>(false);
 const tg = window.Telegram?.WebApp;
 async function getPredictionAPI()  {
   const response = await fetch("/.netlify/functions/getPrediction?user="+tg?.initDataUnsafe?.user?.username);
@@ -20,7 +21,18 @@ async function getPredictionAPI()  {
   return result[0];
 }
 
+async function getTodayPredictionAPI()  {
+  const response = await fetch("/.netlify/functions/getTodayPrediction?user="+tg?.initDataUnsafe?.user?.username);
+  if (!response.ok) {
+    throw new Error(`Error fetching data. Status: ${response.status}`);
+  }
+  const result: number[] = await response.json();
+  return result[0];
+}
+
+
 async function getPrediction() {
+  randomCookie.value = await getPredictionAPI();
   toggleText()
 }
 
@@ -31,13 +43,16 @@ function toggleText() {
 }
 
 onMounted(async ()=> {
-  randomCookie.value = await getPredictionAPI();
-  console.log(randomCookie.value);
+  const count = await getTodayPredictionAPI();
+  if (count == 0) {
+    ok.value = true;
+  }
+  loaded.value = true;
 })
 </script>
 
 <template>
-  <div>
+  <div v-if="loaded">
     <div v-if="ok">
       <div v-if="!showText" class="flex flex-wrap justify-content-center">
         <img v-for="n in 9" alt="Vue logo" class="logo"
