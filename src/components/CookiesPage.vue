@@ -9,9 +9,9 @@ interface CookiePrediction {
 
 const randomCookie = ref<CookiePrediction | undefined>(undefined);
 const ok = ref<boolean>(false);
-
+const tg = window.Telegram?.WebApp;
 async function getPredictionAPI()  {
-  const response = await fetch("/.netlify/functions/getPrediction");
+  const response = await fetch("/.netlify/functions/getPrediction?user="+tg?.initDataUnsafe?.user);
   if (!response.ok) {
     throw new Error(`Error fetching data. Status: ${response.status}`);
   }
@@ -23,8 +23,6 @@ async function getPredictionAPI()  {
 async function getPrediction() {
   toggleText()
 }
-
-const tg = window.Telegram?.WebApp;
 
 const showText = ref(false);
 
