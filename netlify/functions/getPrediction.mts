@@ -2,11 +2,9 @@ import {Context} from "@netlify/functions";
 
 import { MongoClient } from "mongodb";
 
-const mongoClient = new MongoClient(process.env.MONGODB_URI);
-
-const clientPromise = mongoClient.connect();
-
 export default async (req: Request, context: Context) => {
+    const mongoClient = new MongoClient(process.env.MONGODB_URI);
+    const clientPromise = mongoClient.connect();
     try {
         const queryParams = new URLSearchParams(req.url.split('?')[1]);
         const user = queryParams.get("user")
@@ -26,7 +24,7 @@ export default async (req: Request, context: Context) => {
     } catch (error) {
         return new Response(error.toString(), { status: 500 })
     } finally {
-        await mongoClient.close()
+       await mongoClient.close()
     }
 }
 
