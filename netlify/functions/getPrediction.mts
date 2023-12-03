@@ -6,6 +6,7 @@ export default async (req: Request, context: Context) => {
     const mongoClient = new MongoClient(process.env.MONGODB_URI);
     const clientPromise = mongoClient.connect();
     try {
+
         const queryParams = new URLSearchParams(req.url.split('?')[1]);
         const user = queryParams.get("user")
         console.log("request from:", user)
@@ -24,13 +25,15 @@ export default async (req: Request, context: Context) => {
     } catch (error) {
         return new Response(error.toString(), { status: 500 })
     } finally {
-       await mongoClient.close()
+        await mongoClient.close()
     }
 }
 
 
 
 const logUserRequest = async (user: string) => {
+    const mongoClient = new MongoClient(process.env.MONGODB_URI);
+    const clientPromise = mongoClient.connect();
     try {
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_USERLOG_COLLECTION);
@@ -42,10 +45,14 @@ const logUserRequest = async (user: string) => {
         console.log(`log was inserted with the _id: ${result.insertedId}`);
     } catch (error) {
         console.log('logUserRequest error: ' + error.toString());
+    } finally {
+        await mongoClient.close()
     }
 }
 
 async function getRecordCountForUsername(username: string) {
+    const mongoClient = new MongoClient(process.env.MONGODB_URI);
+    const clientPromise = mongoClient.connect();
     try {
         console.log('getRecordCountForUsername', username);
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
@@ -71,5 +78,7 @@ async function getRecordCountForUsername(username: string) {
         return r
     } catch (error) {
         console.log('getRecordCountForUsername error: ' + error.toString());
+    } finally {
+        await mongoClient.close();
     }
 }
