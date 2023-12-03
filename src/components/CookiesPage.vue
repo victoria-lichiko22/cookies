@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 
 interface CookiePrediction {
   _id: string;
@@ -8,15 +8,19 @@ interface CookiePrediction {
 }
 
 const randomCookie = ref<CookiePrediction | undefined>(undefined);
+const ok = ref<boolean>(false);
 
 async function getPredictionAPI()  {
-  const result : CookiePrediction[] = await fetch("/.netlify/functions/getPrediction").then(response => response.json());
+  const response = await fetch("/.netlify/functions/getPrediction");
+  if (!response.ok) {
+    throw new Error(`Error fetching data. Status: ${response.status}`);
+  }
+  const result: CookiePrediction[] = await response.json();
+  ok.value = true;
   return result[0];
 }
 
 async function getPrediction() {
-  randomCookie.value = await getPredictionAPI();
-  console.log(randomCookie.value);
   toggleText()
 }
 
@@ -27,24 +31,34 @@ const showText = ref(false);
 function toggleText() {
   showText.value =!showText.value;
 }
+
+onMounted(async ()=> {
+  randomCookie.value = await getPredictionAPI();
+  console.log(randomCookie.value);
+})
 </script>
 
 <template>
   <div>
-    <div v-if="!showText" class="flex flex-wrap justify-content-center">
-      <img v-for="n in 9" alt="Vue logo" class="logo"
-           src="../assets/cookie.png" width="100" height="100"
-           @click="getPrediction()"
-      />
+    <div v-if="ok">
+      <div v-if="!showText" class="flex flex-wrap justify-content-center">
+        <img v-for="n in 9" alt="Vue logo" class="logo"
+             src="../assets/cookie.png" width="100" height="100"
+             @click="getPrediction()"
+        />
+      </div>
+      <div v-if="showText" class="flex flex-column background">
+        <div class="text-lg font-semibold mytext">
+          {{ randomCookie.name }}
+        </div>
+        <div class="mytext">
+          {{ randomCookie.description }}
+        </div>
+        {{ tg }}
+      </div>
     </div>
-    <div v-if="showText" class="flex flex-column background">
-      <div class="text-lg font-semibold mytext">
-        {{ randomCookie.name }}
-      </div>
-      <div class="mytext">
-        {{ randomCookie.description }}
-      </div>
-      {{ tg }}
+    <div v-else>
+      <div class="text-lg font-semibold mytext">Приходи завтра</div>
     </div>
   </div>
 
