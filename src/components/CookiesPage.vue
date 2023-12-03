@@ -2,16 +2,23 @@
 import {ref} from "vue";
 
 interface CookiePrediction {
+  _id: string;
   name: string;
   description: string;
 }
 
-async function getPrediction() : Promise<CookiePrediction> {
+const randomCookie = ref<CookiePrediction | undefined>(undefined);
+
+async function getPredictionAPI()  {
   const result : CookiePrediction[] = await fetch("/.netlify/functions/getPrediction").then(response => response.json());
   return result[0];
 }
 
-const randomCookie = await getPrediction();
+async function getPrediction() {
+  randomCookie.value = await getPredictionAPI();
+  console.log(randomCookie.value);
+  toggleText()
+}
 
 const tg = window.Telegram?.WebApp;
 
@@ -27,7 +34,7 @@ function toggleText() {
     <div v-if="!showText" class="flex flex-wrap justify-content-center">
       <img v-for="n in 9" alt="Vue logo" class="logo"
            src="../assets/cookie.png" width="100" height="100"
-           @click="toggleText()"
+           @click="getPrediction()"
       />
     </div>
     <div v-if="showText" class="flex flex-column background">
