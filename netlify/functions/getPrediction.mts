@@ -1,6 +1,6 @@
 import {Context} from "@netlify/functions";
 
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 
 const mongoClient = new MongoClient(process.env.MONGODB_URI);
 
@@ -28,6 +28,8 @@ export default async (req: Request, context: Context) => {
         return { statusCode: 500, body: error.toString() }
     }
 }
+
+
 
 const logUserRequest = async (user: string) => {
     try {
