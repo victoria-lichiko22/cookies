@@ -25,6 +25,8 @@ export default async (req: Request, context: Context) => {
         return new Response(JSON.stringify(results))
     } catch (error) {
         return new Response(error.toString(), { status: 500 })
+    } finally {
+        await mongoClient.close()
     }
 }
 
