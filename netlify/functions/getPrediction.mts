@@ -10,6 +10,7 @@ const handler = async (req: Request, context: Context) => {
     try {
         const queryParams = new URLSearchParams(req.url.split('?')[1]);
         const user = queryParams.get("user") ? queryParams.get("user") : "test";
+        console.log("request from:", user)
         const count = await getRecordCountForUsername(user)
         if (count > 0) {
             return { statusCode: 403, body: "Приходи завтра" }
