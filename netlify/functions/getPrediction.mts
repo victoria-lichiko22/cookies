@@ -8,8 +8,9 @@ const clientPromise = mongoClient.connect();
 
 const handler = async (req: Request, context: Context) => {
     try {
-
-        const count = await getRecordCountForUsername("test")
+        const queryParams = new URLSearchParams(req.url.split('?')[1]);
+        const user = queryParams.get("user") ? queryParams.get("user") : "test";
+        const count = await getRecordCountForUsername(user)
         if (count > 0) {
             return { statusCode: 403, body: "Приходи завтра" }
         }
@@ -17,7 +18,7 @@ const handler = async (req: Request, context: Context) => {
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_COLLECTION);
         const results = await collection.aggregate([{ $sample: { size: 1 } }]).toArray();
-        await logUserRequest("test")
+        await logUserRequest(user)
         return {
             statusCode: 200,
             body: JSON.stringify(results),
