@@ -44,8 +44,8 @@ function toggleText() {
 
 onMounted(async ()=> {
   const count = await getTodayPredictionAPI();
-  if (count == 0) {
-    ok.value = true;
+  if (count > 0) {
+    ok.value = false
   }
   loaded.value = true;
 })
