@@ -6,7 +6,7 @@ const mongoClient = new MongoClient(process.env.MONGODB_URI);
 
 const clientPromise = mongoClient.connect();
 
-const handler = async (req: Request, context: Context) => {
+export default async (req: Request, context: Context) => {
     try {
         const queryParams = new URLSearchParams(req.url.split('?')[1]);
         const user = queryParams.get("user")
@@ -28,9 +28,6 @@ const handler = async (req: Request, context: Context) => {
         return { statusCode: 500, body: error.toString() }
     }
 }
-
-module.exports = { handler }
-
 
 const logUserRequest = async (user: string) => {
     try {
