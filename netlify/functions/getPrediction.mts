@@ -15,10 +15,7 @@ export default async (req: Request, context: Context) => {
         console.log("record count:", count)
         if (count > 0) {
             console.log("return forbidden")
-            return {
-                statusCode: 403,
-                body: "forbidden"
-            }
+            return { statusCode: 200, body: "forbidden" }
         }
         console.log("get data")
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
