@@ -12,6 +12,7 @@ export default async (req: Request, context: Context) => {
         const user = queryParams.get("user")
         console.log("request from:", user)
         const count = await getRecordCountForUsername(user)
+        console.log("record count:", count)
         if (count > 0) {
             return { statusCode: 403, body: "Приходи завтра" }
         }
@@ -67,7 +68,9 @@ async function getRecordCountForUsername(username: string) {
                 },
             },
         ]).toArray();
-        return result.length > 0 ? result[0].count : 0
+        const r = result.length > 0 ? result[0].count : 0
+        console.log(`getRecordCountForUsername result: ${r}`)
+        return r
     } catch (error) {
         console.log('getRecordCountForUsername error: ' + error.toString());
     }
