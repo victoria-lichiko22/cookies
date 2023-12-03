@@ -7,7 +7,8 @@ interface CookiePrediction {
 }
 
 async function getPrediction() : Promise<CookiePrediction> {
-  return await fetch("/.netlify/functions/getPrediction").then(response => response.json());
+  const result : CookiePrediction[] = await fetch("/.netlify/functions/getPrediction").then(response => response.json());
+  return result[0];
 }
 
 const randomCookie = await getPrediction();
