@@ -8,15 +8,15 @@ interface CookiePrediction {
 }
 
 const randomCookie = ref<CookiePrediction | undefined>(undefined);
-const ok = ref<boolean>(false);
+const ok = ref<boolean>(true);
 const tg = window.Telegram?.WebApp;
 async function getPredictionAPI()  {
-  const response = await fetch("/.netlify/functions/getPrediction?user="+tg?.initDataUnsafe?.user);
+  const response = await fetch("/.netlify/functions/getPrediction?user="+tg?.initDataUnsafe?.user?.username);
   if (!response.ok) {
+    ok.value = false;
     throw new Error(`Error fetching data. Status: ${response.status}`);
   }
   const result: CookiePrediction[] = await response.json();
-  ok.value = true;
   return result[0];
 }
 
