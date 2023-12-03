@@ -9,7 +9,7 @@ const clientPromise = mongoClient.connect();
 const handler = async (req: Request, context: Context) => {
     try {
         const queryParams = new URLSearchParams(req.url.split('?')[1]);
-        const user = queryParams.get("user") ? queryParams.get("user") : "test";
+        const user = queryParams.get("user")
         console.log("request from:", user)
         const count = await getRecordCountForUsername(user)
         if (count > 0) {
