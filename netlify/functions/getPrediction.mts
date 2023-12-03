@@ -8,7 +8,7 @@ const handler = async (event) => {
     try {
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_COLLECTION);
-        const results = await collection.aggregate([{ $sample: { size: 1 } }]);
+        const results = await collection.aggregate([{ $sample: { size: 1 } }]).toArray();
         return {
             statusCode: 200,
             body: JSON.stringify(results),
