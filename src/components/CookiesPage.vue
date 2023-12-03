@@ -26,8 +26,7 @@ async function getTodayPredictionAPI()  {
   if (!response.ok) {
     throw new Error(`Error fetching data. Status: ${response.status}`);
   }
-  const result: number[] = await response.json();
-  return result[0];
+  return  await response.json();
 }
 
 
