@@ -15,7 +15,7 @@ export default async (req: Request, context: Context) => {
         const result = await collection.aggregate([
             {
                 $match: {
-                    user: username,
+                    user: user,
                     timestamp: { $gte: currentDate },
                 },
             },
