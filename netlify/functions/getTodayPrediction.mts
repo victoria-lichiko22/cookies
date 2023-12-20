@@ -14,9 +14,11 @@ export default async (req: Request, context: Context) => {
         console.log(tgData)
 
         const data = transformInitData(tgData)
+        const user = JSON.parse(data.user).id
         console.log(JSON.stringify(data))
+        console.log(user)
         const ok = verifyInitData(tgData)
-        console.log(ok,userid)
+        console.log(ok,user)
         if (!ok) {
             return new Response("", { status: 400 })
         } else {
