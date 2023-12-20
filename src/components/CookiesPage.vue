@@ -12,7 +12,10 @@ const ok = ref<boolean>(false);
 const loaded = ref<boolean>(false);
 const tg = window.Telegram?.WebApp;
 async function getPredictionAPI()  {
-  const response = await fetch("/.netlify/functions/getPrediction?user="+tg?.initDataUnsafe?.user?.username);
+  const response = await fetch("/.netlify/functions/getPrediction",{
+    method: 'POST',
+    body: tg.initData
+  });
   if (!response.ok) {
     ok.value = false;
     throw new Error(`Error fetching data. Status: ${response.status}`);
@@ -22,7 +25,13 @@ async function getPredictionAPI()  {
 }
 
 async function getTodayPredictionAPI()  {
-  const response = await fetch("/.netlify/functions/getTodayPrediction?user="+tg?.initDataUnsafe?.user?.username);
+  const response = await fetch("/.netlify/functions/getTodayPrediction",{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/html'
+    },
+    body: tg.initData
+  } );
   if (!response.ok) {
     throw new Error(`Error fetching data. Status: ${response.status}`);
   }
