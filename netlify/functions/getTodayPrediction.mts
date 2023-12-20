@@ -11,14 +11,9 @@ export default async (req: Request, context: Context) => {
         // const queryParams = new URLSearchParams(req.url.split('?')[1]);
         // const user = queryParams.get("user")
         const tgData = await req.text()
-        console.log(tgData)
-
-        const data = transformInitData(tgData)
+        const data = Object.fromEntries(new URLSearchParams(tgData))
         const user = JSON.parse(data.user).id
-        console.log(JSON.stringify(data))
-        console.log(user)
         const ok = verifyInitData(tgData)
-        console.log(ok,user)
         if (!ok) {
             return new Response("", { status: 400 })
         }
@@ -67,12 +62,4 @@ const verifyInitData = (telegramInitData: string): boolean => {
     const calculatedHash = crypto.createHmac('sha256', secret.digest()).update(dataCheckString).digest('hex');
 
     return calculatedHash === hash;
-}
-
-type TransformInitData = {
-    [k: string]: string;
-};
-
-function transformInitData(initData: string): TransformInitData {
-    return Object.fromEntries(new URLSearchParams(initData));
 }

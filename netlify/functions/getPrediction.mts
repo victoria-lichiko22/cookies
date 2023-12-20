@@ -7,10 +7,9 @@ export default async (req: Request, context: Context) => {
     const mongoClient = new MongoClient(process.env.MONGODB_URI);
     const clientPromise = mongoClient.connect();
     try {
-        // const queryParams = new URLSearchParams(req.url.split('?')[1]);
-        // const user = queryParams.get("user")
-        const tgData = req.body.toString()
-        console.log(tgData)
+        const tgData = await req.text()
+        const data = Object.fromEntries(new URLSearchParams(tgData))
+        const user = JSON.parse(data.user).id
         const ok = verifyInitData(tgData)
         if (!ok) {
             return new Response("", { status: 400 })
