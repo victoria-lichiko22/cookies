@@ -21,10 +21,7 @@ export default async (req: Request, context: Context) => {
         console.log(ok,user)
         if (!ok) {
             return new Response("", { status: 400 })
-        } else {
-            return new Response(true)
         }
-
 
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_USERLOG_COLLECTION);
