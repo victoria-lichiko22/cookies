@@ -5,13 +5,12 @@ import crypto from "crypto";
 
 export default async (req: Request, context: Context) => {
     console.log("function start")
-    console.log(req.body.toString())
     const mongoClient = new MongoClient(process.env.MONGODB_URI);
     const clientPromise = mongoClient.connect();
     try {
         // const queryParams = new URLSearchParams(req.url.split('?')[1]);
         // const user = queryParams.get("user")
-        const tgData = req.body.toString()
+        const tgData = await req.text()
         console.log(tgData)
         const ok = verifyInitData(tgData)
         if (!ok) {
