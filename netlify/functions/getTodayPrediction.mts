@@ -13,6 +13,8 @@ export default async (req: Request, context: Context) => {
         const ok = verifyInitData(tgData)
         if (!ok) {
             return new Response("", { status: 400 })
+        } else {
+            return new Response(true)
         }
 
 
