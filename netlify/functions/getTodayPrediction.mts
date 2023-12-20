@@ -12,7 +12,11 @@ export default async (req: Request, context: Context) => {
         // const user = queryParams.get("user")
         const tgData = await req.text()
         console.log(tgData)
+
+        const data = transformInitData(tgData)
+        console.log(JSON.stringify(data))
         const ok = verifyInitData(tgData)
+        console.log(ok,userid)
         if (!ok) {
             return new Response("", { status: 400 })
         } else {
@@ -64,4 +68,12 @@ const verifyInitData = (telegramInitData: string): boolean => {
     const calculatedHash = crypto.createHmac('sha256', secret.digest()).update(dataCheckString).digest('hex');
 
     return calculatedHash === hash;
+}
+
+type TransformInitData = {
+    [k: string]: string;
+};
+
+function transformInitData(initData: string): TransformInitData {
+    return Object.fromEntries(new URLSearchParams(initData));
 }
