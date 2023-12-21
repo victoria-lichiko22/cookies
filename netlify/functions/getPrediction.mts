@@ -1,7 +1,7 @@
 import {Context} from "@netlify/functions";
 
 import { MongoClient } from "mongodb";
-import { verifyInitData } from "./tgapi/tg"
+import { verifyInitData } from "./tgapi/tg.mts"
 
 export default async (req: Request, context: Context) => {
     const mongoClient = new MongoClient(process.env.MONGODB_URI);
