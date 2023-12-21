@@ -34,12 +34,12 @@ export const sendMessage = async (chat_id, text) => {
     return true;
 };
 
-export const sendButton = async (chat_id, text) => {
+export const sendButton = async (chat_id, text, buttonText) => {
     const body = JSON.stringify({
         chat_id: chat_id,
         text: text,
         reply_markup: { inline_keyboard: [[{
-            text: "keyboard text",
+            text: `${buttonText}`,
             web_app: { url: `${process.env.WEB_APP_URL}`}
         }]]}
     })
