@@ -35,19 +35,21 @@ export const sendMessage = async (chat_id, text) => {
 };
 
 export const sendButton = async (chat_id, text) => {
+    const body = JSON.stringify({
+        chat_id: chat_id,
+        text: text,
+        reply_markup: [[{
+            text: "keyboard text",
+            web_app: { url: `${process.env.WEB_APP_URL}`}
+        }]]
+    })
+    console.log(body);
     const resp = await fetch(`https://api.telegram.org/bot${process.env.API_TOKEN}/sendMessage`,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            chat_id: chat_id,
-            text: text,
-            reply_markup: [[{
-                text: "keyboard text",
-                web_app: { url: `${process.env.WEB_APP_URL}`}
-            }]]
-        })
+        body: body
     })
     console.log(resp.status, await resp.text())
    return true
