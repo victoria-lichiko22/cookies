@@ -23,3 +23,21 @@ export const sendMessage = async (chat_id, text) => {
     await fetch(`https://api.telegram.org/bot${process.env.API_TOKEN}/sendMessage?chat_id=${chat_id}&text=${text}`);
     return true;
 };
+
+export const sendButton = async (chat_id, text) => {
+    await fetch("https://api.telegram.org/bot${process.env.API_TOKEN}/sendMessage",{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: {
+            chat_id: chat_id,
+            text: text,
+            reply_markup: {
+                text: "keyboard text",
+                web_app: { url: `${process.env.WEB_APP_URL}`}
+            }
+        }
+    } );
+   return true
+};
