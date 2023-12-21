@@ -25,7 +25,7 @@ export const sendMessage = async (chat_id, text) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.Marshal({
+        body: JSON.stringify({
             chat_id: chat_id,
             text: text,
         })
@@ -40,7 +40,7 @@ export const sendButton = async (chat_id, text) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.Marshal({
+        body: JSON.stringify({
             chat_id: chat_id,
             text: text,
             reply_markup: {
