@@ -35,7 +35,7 @@ export const sendMessage = async (chat_id, text) => {
 };
 
 export const sendButton = async (chat_id, text) => {
-    const resp = await fetch("https://api.telegram.org/bot${process.env.API_TOKEN}/sendMessage",{
+    const resp = await fetch(`https://api.telegram.org/bot${process.env.API_TOKEN}/sendMessage`,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -49,6 +49,6 @@ export const sendButton = async (chat_id, text) => {
             }
         })
     })
-    console.log(resp.status, resp.text())
+    console.log(resp.status, await resp.text())
    return true
 };
