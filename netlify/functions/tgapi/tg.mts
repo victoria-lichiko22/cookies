@@ -38,10 +38,10 @@ export const sendButton = async (chat_id, text) => {
     const body = JSON.stringify({
         chat_id: chat_id,
         text: text,
-        reply_markup: [[{
+        reply_markup: { inline_keyboard: [[{
             text: "keyboard text",
             web_app: { url: `${process.env.WEB_APP_URL}`}
-        }]]
+        }]]}
     })
     console.log(body);
     const resp = await fetch(`https://api.telegram.org/bot${process.env.API_TOKEN}/sendMessage`,{
