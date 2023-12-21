@@ -18,3 +18,10 @@ export const verifyInitData = (telegramInitData: string): boolean => {
 
     return calculatedHash === hash;
 }
+
+const axios = require("axios").default;
+
+export const sendMessage = async (chat_id, text) => {
+    await fetch(`https://api.telegram.org/bot${process.env.API_TOKEN}/sendMessage?chat_id=${chat_id}&text=${text}`);
+    return true;
+};
