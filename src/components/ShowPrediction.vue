@@ -15,8 +15,8 @@ mainButton.onClick(tg.close)
 </script>
 
 <template>
-  <div class="flex flex-column background mx-2">
-    <div class="text-lg font-semibold mytext text-center">
+  <div class="flex flex-column background mx-2 my-5">
+    <div class="text-lg font-semibold mytext text-center mb-2">
       {{ props.prediction.name }}
     </div>
     <div class="mytext text-center">
