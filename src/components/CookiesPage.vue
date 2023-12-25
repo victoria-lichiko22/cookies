@@ -64,9 +64,7 @@ onMounted(async ()=> {
 <template>
   <div v-if="loaded">
     <div v-if="ok">
-      <div v-if="!showText" class="flex flex-wrap justify-content-center">
-        <SelectCookie @selected="getPrediction"/>
-      </div>
+      <SelectCookie v-if="!showText" @selected="getPrediction"/>
       <div v-if="showText" class="flex flex-column background">
         <div class="text-lg font-semibold mytext">
           {{ randomCookie.name }}
