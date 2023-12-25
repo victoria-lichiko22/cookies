@@ -5,7 +5,7 @@ interface CookiePrediction {
   description: string;
 }
 
-defineProps<{ prediction: CookiePrediction}>()
+const props = defineProps<{ prediction: CookiePrediction}>()
 
 const tg = window.Telegram?.WebApp;
 const mainButton = tg.MainButton
@@ -17,10 +17,10 @@ mainButton.onClick(tg.close)
 <template>
   <div class="flex flex-column background">
     <div class="text-lg font-semibold mytext">
-      {{ prediction.name }}
+      {{ props.prediction.name }}
     </div>
     <div class="mytext">
-      {{ prediction.description }}
+      {{ props.prediction.description }}
     </div>
   </div>
 </template>
