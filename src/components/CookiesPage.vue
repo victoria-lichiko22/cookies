@@ -66,7 +66,7 @@ onMounted(async ()=> {
   <div v-if="loaded">
     <div v-if="ok">
       <SelectCookie v-if="!showText" @selected="getPrediction"/>
-      <ShowPrediction v-if="showText" prediction="randomCookie"/>
+      <ShowPrediction v-if="showText" :prediction="randomCookie"/>
     </div>
     <div v-else>
       <NoCookies/>
