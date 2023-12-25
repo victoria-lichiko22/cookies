@@ -4,11 +4,11 @@
 
 <template>
 <div>
-  <img src="../assets/cat.png" class="max-w-screen"/>
-  <div class="flex flex-column background">
+  <div class="flex flex-column background mb-2">
     <div class="text-lg mytext text-center">Только одна печенька в день</div>
     <div class="text-lg font-bold mytext text-center">Возвращайся завтра</div>
   </div>
+  <img src="../assets/cat.png" class="max-w-screen"/>
 </div>
 </template>
 
