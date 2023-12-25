@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
 import NoCookies from "@/components/NoCookies.vue";
+import SelectCookie from "@/components/SelectCookie.vue";
 
 interface CookiePrediction {
   _id: string;
@@ -64,10 +65,7 @@ onMounted(async ()=> {
   <div v-if="loaded">
     <div v-if="ok">
       <div v-if="!showText" class="flex flex-wrap justify-content-center">
-        <img v-for="n in 9" alt="Vue logo" class="logo"
-             src="../assets/cookie.png" width="100" height="100"
-             @click="getPrediction()"
-        />
+        <SelectCookie @selected="getPrediction"/>
       </div>
       <div v-if="showText" class="flex flex-column background">
         <div class="text-lg font-semibold mytext">
