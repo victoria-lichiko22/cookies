@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import CookiesPage from "@/components/CookiesPage.vue";
-import NoCookies from "@/components/NoCookies.vue";
 </script>
 
 <template>
