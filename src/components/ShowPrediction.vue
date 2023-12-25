@@ -15,11 +15,11 @@ mainButton.onClick(tg.close)
 </script>
 
 <template>
-  <div class="flex flex-column background">
-    <div class="text-lg font-semibold mytext">
+  <div class="flex flex-column background mx-2">
+    <div class="text-lg font-semibold mytext text-center">
       {{ props.prediction.name }}
     </div>
-    <div class="mytext">
+    <div class="mytext text-center">
       {{ props.prediction.description }}
     </div>
   </div>
