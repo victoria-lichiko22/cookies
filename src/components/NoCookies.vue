@@ -1,5 +1,9 @@
 <script setup lang="ts">
-
+const tg = window.Telegram?.WebApp;
+const mainButton = tg.MainButton
+mainButton.text="Хорошо, вернусь завтра"
+mainButton.show()
+mainButton.onClick(tg.close)
 </script>
 
 <template>
