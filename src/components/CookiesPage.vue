@@ -2,6 +2,7 @@
 import {onMounted, ref} from "vue";
 import NoCookies from "@/components/NoCookies.vue";
 import SelectCookie from "@/components/SelectCookie.vue";
+import ShowPrediction from "@/components/ShowPrediction.vue";
 
 interface CookiePrediction {
   _id: string;
@@ -65,14 +66,7 @@ onMounted(async ()=> {
   <div v-if="loaded">
     <div v-if="ok">
       <SelectCookie v-if="!showText" @selected="getPrediction"/>
-      <div v-if="showText" class="flex flex-column background">
-        <div class="text-lg font-semibold mytext">
-          {{ randomCookie.name }}
-        </div>
-        <div class="mytext">
-          {{ randomCookie.description }}
-        </div>
-      </div>
+      <ShowPrediction v-if="showText" prediction="randomCookie"/>
     </div>
     <div v-else>
       <NoCookies/>
