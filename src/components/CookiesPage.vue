@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
+import NoCookies from "@/components/NoCookies.vue";
 
 interface CookiePrediction {
   _id: string;
@@ -75,11 +76,10 @@ onMounted(async ()=> {
         <div class="mytext">
           {{ randomCookie.description }}
         </div>
-        {{ tg }}
       </div>
     </div>
     <div v-else>
-      <div class="text-lg font-semibold mytext">Приходи завтра</div>
+      <NoCookies/>
     </div>
   </div>
 
