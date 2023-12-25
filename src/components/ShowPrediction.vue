@@ -6,6 +6,12 @@ interface CookiePrediction {
 }
 
 defineProps<{ prediction: CookiePrediction}>()
+
+const tg = window.Telegram?.WebApp;
+const mainButton = tg.MainButton
+mainButton.text="Закрыть"
+mainButton.show()
+mainButton.onClick(tg.close)
 </script>
 
 <template>
